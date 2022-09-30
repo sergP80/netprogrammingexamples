@@ -4,9 +4,11 @@ void exit_handler();
 SOCKET sender_socket;
 int main(int argc, char* argv[])
 {
-    COMMAND_OPTIONS cmd_opts{"", 0};
+    COMMAND_OPTIONS cmd_opts{DEFAULT_TARGET_HOST, DEFAULT_TARGET_PORT};
 
-    if (parse_cmd(argc, argv, &cmd_opts) || !valid_connection_opts(&cmd_opts))
+    parse_cmd(argc, argv, &cmd_opts);
+
+    if (!valid_connection_opts(&cmd_opts))
     {
         common_usage(argv[0]);
         return -1;
