@@ -19,6 +19,7 @@ int main(int argc, char* argv[])
 
 	common_init_handler();
 
+	
 	client_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (client_socket <= 0) {
 		error_msg("Can't create socket");
@@ -28,7 +29,7 @@ int main(int argc, char* argv[])
 	sockaddr_in server_addr;
 	server_addr.sin_family = AF_INET;
 	server_addr.sin_port = htons(port);
-	server_addr.sin_addr.s_addr = inet_addr(host);
+	resolve_addr(host, &server_addr.sin_addr);
 
 	//Connect to the server
 	if (connect(client_socket, (sockaddr*)&server_addr, sizeof(sockaddr))) {
@@ -40,35 +41,43 @@ int main(int argc, char* argv[])
 
 	printf("Connection to the server %s:%d success\n", host, port);
 
-	int r;
-	printf("%s", "Enter a number to check for its prime:");
-	//fgets(msg, sizeof(msg), stdin);
-	if (scanf("%d", &r) != 1)
-	{
-		printf("Invalid input\n");
-		return -1;
-	}
+	char control = '\0';
 
-	int sc = send(client_socket, (char*)&r, sizeof(r), 0);
-	if (sc <= 0) {
-		char err_msg[128] = "";
-		sprintf(err_msg, "Can't send data to the server %s:%d", host, port);
-		error_msg(err_msg);
-		return -1;
-	}
-
-	{
-		char resp[256] = "";
-		sc = recv(client_socket, resp, sizeof(resp), 0);
-		if (sc <= 0)
+	do {
+		int r;
+		printf("%s", "Enter a number to check for its prime:");
+		if (scanf("%d", &r) != 1)
 		{
-			printf("Server is not able\n");
+			printf("Invalid input\n");
 			return -1;
 		}
-		printf("%s", resp);
-	}
 
-	close_socket(client_socket);
+		int sc = send(client_socket, (char*)&r, sizeof(r), 0);
+		if (sc <= 0) {
+			char err_msg[128] = "";
+			sprintf(err_msg, "Can't send data to the server %s:%d", host, port);
+			error_msg(err_msg);
+			return -1;
+		}
+
+		{
+			char resp[256] = "";
+			sc = recv(client_socket, resp, sizeof(resp), 0);
+			if (sc <= 0)
+			{
+				printf("Server is not able\n");
+				return -1;
+			}
+			printf("%s", resp);
+		}
+
+		printf("\nDo you want to break? (Y/Any):");
+		
+		getchar();
+		control = getchar();		
+	} while (toupper(control) != 'Y');
+
+	printf("Bye!\n");
 
 	return 0;
 }
