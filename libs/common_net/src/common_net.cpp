@@ -6,7 +6,7 @@ int common_init_handler()
     WSADATA ws;
 	CHECK_IO(WSAStartup(MAKEWORD(2, 2), &ws) == 0, -1, "Error init of WinSock2\n");
 	return 0;
-#elif __linux__
+#elif __linux__ || __APPLE__
     return 0;
 #else
 #error "Unsupported platform"
@@ -16,7 +16,7 @@ int common_init_handler()
 void common_exit_handler() {
 #ifdef _WIN32
     CHECK_VOID_IO(WSACleanup() == 0, "Error shutdown of WinSock2\n");
-#elif __linux__
+#elif __linux__ || __APPLE__
     return;
 #else
 #error "Unsupported platform"
@@ -93,7 +93,7 @@ int close_socket(int socket) {
 #ifdef _WIN32
     CHECK_IO(closesocket(socket) == 0, -1, "Error close socket\n");
     return 0;
-#elif __linux__
+#elif __linux__ || __APPLE__
     return close(socket);
 #else
  #error "Unsupported platform"

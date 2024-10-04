@@ -6,7 +6,7 @@
 #include "icmp.h"
 #ifdef _WIN32
 #include "ws2tcpip.h"
-#elif __linux__
+#elif __linux__ || __APPLE__
 #else
 #error "Unsupported platform"
 #endif

@@ -15,7 +15,7 @@ typedef int socklen_t;
 
 #define VOID_DEFAULT_RESULT
 
-#elif __linux__
+#elif __linux__ || __APPLE__
 
 #include<netinet/ip.h>
 #include<sys/socket.h>
@@ -29,6 +29,9 @@ typedef int SOCKET;
 #define VOID_DEFAULT_RESULT NULL
 #endif
 
+#ifdef __APPLE__
+#include <cctype>
+#endif
 #include "common_utils.h"
 
 int common_init_handler();
