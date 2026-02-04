@@ -10,4 +10,10 @@
 #define CONNECTION_QUEUE 100
 
 THREAD_VOID handle_connection(void*);
+
+typedef struct Connection {
+    THREAD_HANDLE thread_id;
+    SOCKET socket;
+} CONNECTION, *PCONNECTION;
+
 #endif //NETWORK_PROGRAMMING_MULTI_THREAD_SERVER_H

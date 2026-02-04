@@ -3,7 +3,7 @@
 void exit_handler();
 
 SOCKET server_socket;
-std::vector<THREAD_HANDLE> connection_pool;
+std::vector<CONNECTION> connection_pool;
 
 int main(int argc, char* argv[])
 {
@@ -33,9 +33,20 @@ int main(int argc, char* argv[])
 		socklen_t len = sizeof(incom_addr);
 		SOCKET socket;
 		CHECK_IO((socket = accept(server_socket, (sockaddr*)&incom_addr, &len)) > 0, -1, "Can't accept connection\n");
+		
+		THREAD_HANDLE thread_id = create_thread(handle_connection, (SOCKET*)socket);
+
 		connection_pool.push_back(
-			create_thread(handle_connection, (SOCKET*)socket)
+			{thread_id, socket}	
 		);
+	}
+
+	for (int i = 0; i < connection_pool.size(); ++i)
+	{
+		CONNECTION connection = connection_pool.at(i);
+		
+		terminate
+		close_socket(connection.socket);
 	}
 
 	close_socket(server_socket);

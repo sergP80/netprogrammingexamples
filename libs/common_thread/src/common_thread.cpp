@@ -20,3 +20,14 @@ PROCESS_ID get_process_id() {
 #error "Unsupported platform"
 #endif
 }
+
+void terminate_thread(THREAD_HANDLE threadId) 
+{
+#ifdef _WIN32
+    TerminateThread(threadId, 0);
+#elif __linux__ || __APPLE__
+    //pthread_cancel(threadId);
+#else
+#error "Unsupported platform"
+#endif
+}

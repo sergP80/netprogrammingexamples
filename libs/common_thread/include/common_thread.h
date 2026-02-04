@@ -30,4 +30,6 @@ THREAD_HANDLE create_thread(thread_function, void*);
 
 PROCESS_ID get_process_id();
 
+void terminate_thread(THREAD_HANDLE);
+
 #endif //NETWORK_PROGRAMMING_COMMON_THREAD_H
