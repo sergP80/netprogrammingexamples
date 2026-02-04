@@ -15,7 +15,7 @@ typedef int socklen_t;
 
 #define VOID_DEFAULT_RESULT
 
-#elif __linux__
+#elif __linux__ || __APPLE__
 
 #include<netinet/ip.h>
 #include<sys/socket.h>

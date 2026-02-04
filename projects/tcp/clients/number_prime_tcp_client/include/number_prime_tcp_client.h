@@ -3,4 +3,6 @@
 
 #include "common_net.h"
 
+#include <ctype.h>
+
 #endif //NETWORK_PROGRAMMING_SIMPLE_TCP_CLIENT_H

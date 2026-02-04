@@ -9,7 +9,7 @@ typedef DWORD ERROR_CODE_TYPE;
 
 #define ERROR_TIMEOUT WSAETIMEDOUT
 
-#elif __linux__
+#elif __linux__ || __APPLE__
 
 #include <errno.h>
 #include <time.h>

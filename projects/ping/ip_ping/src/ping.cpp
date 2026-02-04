@@ -38,7 +38,7 @@ int parse_cmd_opts(int argc, char* argv[], char* dest, PPING_CMD_OPTIONS opts)
 		parse_cmd_opts(argv[i], opts);
 	}
 
-	sprintf(dest, "%s", argv[argc - 1]);
+	snprintf(dest, 1024, "%s", argv[argc - 1]);
 
 	return EPARSE_CMD_OK;
 }

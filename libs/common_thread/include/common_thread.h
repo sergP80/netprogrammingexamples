@@ -10,7 +10,7 @@ typedef DWORD PROCESS_ID;
 
 #define THREAD_VOID void
 
-#elif __linux__
+#elif __linux__ || __APPLE__
 
 
 #include<sys/types.h>
