@@ -45,7 +45,6 @@ int main(int argc, char* argv[])
 	{
 		CONNECTION connection = connection_pool.at(i);
 		
-		terminate
 		close_socket(connection.socket);
 	}
 
