@@ -29,6 +29,9 @@ typedef int SOCKET;
 #define VOID_DEFAULT_RESULT NULL
 #endif
 
+#ifdef __APPLE__
+#include <cctype>
+#endif
 #include "common_utils.h"
 
 int common_init_handler();
